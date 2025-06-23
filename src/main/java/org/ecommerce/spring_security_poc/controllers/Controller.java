@@ -40,8 +40,6 @@ public class Controller {
         String username = userInfo.getUsername();
         String password = userInfo.getPassword();
 
-        System.out.println(password);
-
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
         SecurityContext context = SecurityContextHolder.createEmptyContext();
@@ -55,8 +53,6 @@ public class Controller {
         String password = userInfo.getPassword();
 
         User user = new User(username, passwordEncoder.encode(password));
-        User savedUser = userRepository.save(user);
-        System.out.println("Username saved: " + savedUser.getUsername());
-        System.out.println("Password saved: " + savedUser.getPassword());
+        userRepository.save(user);
     }
 }

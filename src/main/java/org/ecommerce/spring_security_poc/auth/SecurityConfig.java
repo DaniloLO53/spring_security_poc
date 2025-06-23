@@ -38,7 +38,7 @@ class UserDetailsImpl implements UserDetails {
         this.password = password;
     }
 
-    public UserDetailsImpl builder(User user) {
+    public UserDetailsImpl build(User user) {
         return new UserDetailsImpl(user.getId(), user.getUsername(), user.getPassword());
     }
 
@@ -69,7 +69,8 @@ class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        return new UserDetailsImpl().builder(user);
+        System.out.println(user.getUsername());
+        return new UserDetailsImpl().build(user);
     }
 }
 
