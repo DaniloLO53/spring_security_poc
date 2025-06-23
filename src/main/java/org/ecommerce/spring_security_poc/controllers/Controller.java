@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Controller {
-    private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
-    public Controller(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
+    public Controller(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/admin/protected")
@@ -36,7 +36,7 @@ public class Controller {
     }
 
     @PostMapping("/auth/signin")
-    public void signIn(@RequestBody User userInfo) {
+    public String signIn(@RequestBody User userInfo) {
         String username = userInfo.getUsername();
         String password = userInfo.getPassword();
 
@@ -45,6 +45,8 @@ public class Controller {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
+
+        return "OK";
     }
 
     @PostMapping("/auth/signup")
