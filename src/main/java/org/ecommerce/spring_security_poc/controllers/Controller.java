@@ -31,7 +31,10 @@ public class Controller {
 
     @GetMapping("/admin/protected")
     public String getProtected() {
-        return "Protected resource";
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+
+        return "Protected resource. Hello, " + authentication.getName();
     }
 
     @GetMapping("/public")
